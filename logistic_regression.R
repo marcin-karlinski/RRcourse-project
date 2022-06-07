@@ -52,8 +52,17 @@ if(!require(corrplot)){
   library(corrplot)
 }
 
+library(pcaPP)
+base_kor <- pulsar_stars[,-9]
+kendall2 <-cor.fk (base_kor)
+kendall2 <- round(kendall2, 2)
+kendall2[kendall2 < 0.5 & kendall2 > -0.5] <- "not correlated"
+
+source("http://michael.hahsler.net/SMU/EMIS7332/R/copytable.R") 
+copytable(kendall2)
+
 correlations <- cor(pulsar_stars2[,1:6])
-corrplot(correlations, method="circle")
+corrplot(correlations, method="circle", tl.cex = 0.5)
 
 
 model2$coefficients
