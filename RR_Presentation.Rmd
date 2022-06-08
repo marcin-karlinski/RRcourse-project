@@ -1,0 +1,55 @@
+---
+title: "Reproducible Research Project"
+author: "Aleksandra Kowalewska & Marcin Karliński & Raffaele di Costanzo"
+date: '2022-06-09'
+output: slidy_presentation
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+## Pulsar Stars Classification
+### Introduction
+
+We decided to prepare this project two fold. First of all, we significantly improved on the original code written in R. And secondly, we translated the original code to Pyhton. 
+
+
+**Agenda for today:**
+
+- Problem description      
+- Improvements in R      
+- Results       
+- Rewriting the code in Python      
+
+## Problem Description
+
+The initial work introduced the problem of classification and presented statistical methods for the classification of observations with an undefined class, based on the training set with known class affiliation of observations.       
+
+The initial code considered logistic regression and random forest as possible solutions to the problem. 
+
+Both models were constructed in R on the basis of data describing radio signals recorded during sky observation, where the positive class was the signal from the pulsar, and the negative class was radio noise.
+
+Both models also proved to be highly effective - at the level of approx. 97% of correctly classified observations. Due to the fact that in the sample there was an imbalance in the number of observations, we also took into account the sensitivity of the model, where the positive class was better indicated by the logistic regression model - it correctly classified 85%, and the random forest model - 82.6%, which suggests that for the discussed classification problem the logistic regression model provides a better classifier.
+
+However,...
+
+## Issues with the initial code
+
+...there were some issues with the initially created code.
+
+First of all, the problem solution was somewhat stripped, comparing only two methods of classification.      
+Secondly, 
+
+## Slide with R Output
+
+```{r cars, echo = TRUE}
+summary(cars)
+```
+
+## Slide with Plot
+
+```{r pressure}
+plot(pressure)
+```
+
