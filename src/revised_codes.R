@@ -4,7 +4,7 @@ library(caret)
 library(car)
 library(caTools)
 library(corrplot)
-library(InformationValue)
+library(InformationValue) #it masks 'confusionMatrix' function from caret that we will use later
 library(randomForest)
 library(DescTools)
 library(leaps)
@@ -22,7 +22,7 @@ options(scipen = 999)
 Sys.setenv(LANG = "en")
 
 #loading dataset
-pulsar_stars <- read.csv("pulsar_stars.csv")
+pulsar_stars <- read.csv("./data/pulsar_stars.csv")
 
 #changing the names of the columns
 colnames(pulsar_stars) <- c(
@@ -182,60 +182,125 @@ stars_test.normalized$glm_smote <- predict(glm_model_smote,
                                            newdata = stars_test.normalized)
 
 #confusion matrix with results for rebalanced model on the test dataset
-caret::confusionMatrix(data = stars_test.normalized$glm_smote,
-                reference = stars_test.normalized$target,
-                positive = "yes")
+conf_matrix_glm <- caret::confusionMatrix(data = stars_test.normalized$glm_smote,
+                                          reference = stars_test.normalized$target,
+                                          positive = "yes")
+
+conf_matrix_glm
 
 
 #####Model tests#####
-#For testing purposes I will also create a model with just an intercept and 
-#a model with all the variables
-null_model <- glm(formula = target ~ 1, data=stars_train.normalized, family=binomial())
-max_model <- glm(formula = target ~ ., data=stars_train.normalized, family=binomial())
 
-#Multicollinearity check
+###Multicollinearity check
 #there seems to be a moderate multicollinearity, since there are variables
 #for which the variance inflation factor is higher than 5, however since 
 #we only care about the prediction accuracy, it can be ignored
 vif(glm_model_smote$finalModel) #model results can be accessed via finalModel attribute
 
-#Hosmer Lemeshow test function - here it will be better described
-hosmerlem = function(y, yhat, g=20) {
-  cutyhat = cut(yhat,breaks = quantile(yhat, probs=seq(0,1, 1/g)), include.lowest=TRUE)  
-  obs = xtabs(cbind(1 - y, y) ~ cutyhat)  
-  expect = xtabs(cbind(1 - yhat, yhat) ~ cutyhat)  
-  chisq = sum((obs - expect)^2/expect)  
-  P = pchisq(chisq, g - 2)  
-  return(list(chisq=chisq,p.value=P))
-  hr=P
-}
+###Hosmer-Lemeshow goodness of fit test
+source("./src/functions.R")
 
+#since the functions needs to be fed with numeric values, we need to change 
+#the type of the target variable
 stars_train.normalized <- stars_train.normalized %>% 
   mutate(target_num = ifelse(target == "yes", 1, 0))
 
+#I will also create a vector of predicted probabilities
+set.seed(123)
 predicted <- predict(glm_model_smote, 
         newdata = stars_train.normalized, type = "prob")
 
+#it actually returns probabilities both for negative and positive class, 
+#we only need values for positive class
 predicted <- predicted$yes
 
+#I will check the p-value for various levels of g
 hosmerlem(y=stars_train.normalized$target_num, yhat=predicted,g=10)
 hosmerlem(y=stars_train.normalized$target_num, yhat=predicted,g=7)
 hosmerlem(y=stars_train.normalized$target_num, yhat=predicted,g=8)
 hosmerlem(y=stars_train.normalized$target_num, yhat=predicted,g=9)
 
+#for all of them, p-value is the same and it's close to 1, therefore 
+#we can say that the model was well fitted
 
-####Roc plot
+###Roc plot
+#the same change of the target variables to numeric, but on the test data - 
+#we will use test data for plotting the ROC curve
 stars_test.normalized <- stars_test.normalized %>% 
   mutate(target_num = ifelse(target == "yes", 1, 0))
 
 predicted <- predict(glm_model_smote, 
                      newdata = stars_test.normalized, type = "prob")
 
+#to create ROC curve plot we just need to supply the function with 
+#actual values and predicted probabilities
 plotROC(stars_test.normalized$target_num, predicted$yes)
 
-library(pROC)
-set.seed(123)
+#We will also calculate the area under the roc curve(auroc) using a different package,
+#namely pROC
 rf.roc<-roc(stars_test.normalized$target_num, predicted$yes)
 auc(rf.roc)
 
-#####Random Forest####
+#auroc is equal to 0.9792, so we received slightly different value than is stated
+#on the plot generated with plotROC function - it is most likely due to different 
+#methods of calculations. The difference is rather small though.
+
+####Random Forest####
+#I will not use randomForest model as in the original scripts, 
+#I will use caret package, since it enables to optimize the parameters
+#(1 parameter actually - mtry which stands for 
+#number of variables used at each split in the random forest)
+parameters <- expand.grid(mtry = 2:9)
+
+#5-fold cross validation like for the logistic regression
+ctrl_cv5_rf <- trainControl(method = "cv", 
+                         number = 5)
+
+#we will also use smote method for resampling
+ctrl_cv5_rf$sampling <- "smote"
+
+#it can take some time for the model to learn
+set.seed(123)
+rf_model_smote <-
+  train(target~.,
+        #earlier we created a variable with a numeric target variable, 
+        #now we will unselect it when building the model, otherwise we will get 100% accuracy
+        data = stars_train.normalized %>% dplyr::select(-target_num), 
+        method = "rf",
+        ntree = 100,
+        tuneGrid = parameters,
+        trControl = ctrl_cv5_rf,
+        importance = TRUE)
+
+#hence I will save the results to RDS
+saveRDS(object = rf_model_smote, "./results/rf_model_smote.rds")
+
+#summary of the results
+summary(rf_model_smote$finalModel)
+
+#creating column with predicted values from random forest model in the test dataset
+stars_test.normalized$rf_smote <- predict(rf_model_smote, 
+                                           newdata = stars_test.normalized)
+
+#confusion matrix with the results
+conf_matrix_rf <- caret::confusionMatrix(stars_test.normalized$target, 
+                                         stars_test.normalized$rf_smote,
+                                         positive = "yes")
+
+conf_matrix_rf
+
+
+###Roc plot
+#we don't need to change the target variable to numeric since it was already done 
+#for the logistic regression model
+
+#predicted values for the test data
+predicted <- predict(rf_model_smote, 
+                     newdata = stars_test.normalized, type = "prob")
+
+#plotting ROC curve for random forest
+plotROC(stars_test.normalized$target_num, predicted$yes)
+
+#Calculating the area under the ROC curve
+rf.roc<-roc(stars_test.normalized$target_num, predicted$yes)
+auc(rf.roc)
