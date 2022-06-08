@@ -13,7 +13,22 @@
 #' @return  Chi square test statistic and corresponding p-value of 
 #' the Hosmer-Lemeshow goodness of fit test
 #' @examples
-#' hosmerlem(data$actual_values, data_predicted_values, 10)
+#'library(titanic)
+#'library(dplyr)
+#'
+#'data("titanic_train")
+#'
+#'titanic_train <- titanic_train %>% 
+#'  na.omit() %>% 
+#'  dplyr::select(Survived, Pclass, Sex, Age, Parch)
+#'
+#'model <- glm(Survived ~.,family=binomial(link='logit'),data=titanic_train)
+#'
+#'set.seed(123)
+#'predicted <- predict(model, 
+#'                     newdata = titanic_train, type = "response")
+#'
+#'hosmerlem(y=titanic_train$Survived, yhat=predicted, g=10)
 
 hosmerlem = function(y, yhat, g=20) {
   #sorting the fitted values and dividing them in g number of groups
