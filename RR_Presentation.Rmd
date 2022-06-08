@@ -39,17 +39,39 @@ However,...
 ...there were some issues with the initially created code.
 
 First of all, the problem solution was somewhat stripped, comparing only two methods of classification.      
-Secondly, 
+Secondly, codes description were done poorly and in need of improvements. 
+Lastly, in the initial code, a function was extracted from the web, which is no longer available for use. 
 
-## Slide with R Output
+Thus, some improvements were desirable.
 
-```{r cars, echo = TRUE}
-summary(cars)
+## Improvements in R 
+
+What has changed?
+
+## Results
+
+### Logistic Regression
+
+```{r glm, echo = TRUE}
+setwd("/Users/ola/Desktop/UW/Semester 4/Reproducible Research/Project")
+glm <- read.csv("glm_conf_matrix_R.csv")
+glm
 ```
 
-## Slide with Plot
 
-```{r pressure}
-plot(pressure)
+## Results contd. 
+
+### Random forest
+
+```{r rf, echo = TRUE}
+setwd("/Users/ola/Desktop/UW/Semester 4/Reproducible Research/Project")
+rf <- read.csv("rf_conf_matrix_R.csv")
+rf
 ```
+## Conclusions
+
+From the comparison of the initial and improved codes, the results were better after alterations (in terms of accuracy etc.). Nonetheless, the conclusions are the same in both cases.       
+Namely, logistic regression is a better fit for this problem, with higher sensitivity (0.93 vs 0.79 in RF). It better classifies the observations with the positive class, as it is more important not to miss the pulsar star than to check the signal, which turn not to be one.
+
+## Additionally: Rewriting the code in Python
 
