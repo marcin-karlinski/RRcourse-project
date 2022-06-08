@@ -12,7 +12,8 @@ Original file is located at
 import pandas as pd
 import numpy as np
 from sklearn.model_selection import train_test_split
-from sklearn.ensemble import RandomForestRegressor
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.metrics import accuracy_score, classification_report
 
 # Read the csv
 
@@ -45,41 +46,35 @@ pulsar_stars.columns = [
 pulsar_stars.head()
 
 # Defining training variables, we're taking all the columns
-# except the last two (skewness_DM.SNR and class)
+# except the last one that is our target variable that we will try to predict.
 
-pulsar_stars2 = pulsar_stars.iloc[:, :-2]
-pulsar_stars2.columns
+X = pulsar_stars.drop(['class'], axis=1)
+y = pulsar_stars['class']
 
 # Creating train and test sets
 
-train, test, train_labels, test_labels = train_test_split(
-    pulsar_stars2, 
-    pulsar_stars2.iloc[:, -2:],
-    train_size=0.75, 
-    random_state=42
-)
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.25, random_state = 42)
 
-print(f"Train size: {len(train)}.\nTest size: {len(test)}.")
+print(f"Train size: {len(X_train)}.\nTest size: {len(X_test)}.")
 
 # Initializing Random Forest Regressor and training the model.
 
-rf = RandomForestRegressor(n_estimators = 1000, random_state = 42)
-rf.fit(train, train_labels)
+rf = RandomForestClassifier(n_estimators = 1000, random_state = 42)
+rf.fit(X_train, y_train)
 
 # Predict the test set
 
-predictions = rf.predict(test)
+y_predictions = rf.predict(X_test)
 
-# Calculate the absolute errors
-errors = abs(predictions - test_labels)
+# Print the accurasy score in percentage terms.
 
-# Print out the mean absolute error (mae), it shows how the average estimate is off by the real value.
-print(f'Mean Absolute Error of "{errors.columns[0]}":', round(np.mean(errors.iloc[:, 0]), 2))
-print(f'Mean Absolute Error of "{errors.columns[1]}":', round(np.mean(errors.iloc[:, 1]), 2))
+print('Model accuracy score with 10 decision-trees : {0:0.4f}'. format(accuracy_score(y_test, y_predictions)))
 
-# Calculate mean absolute percentage error (MAPE)
-mape = 100 * (errors / test_labels)
+# Print the most important features
 
-# Calculate and display accuracy
-accuracy = 100 - np.mean(mape)
-print('Accuracy:', round(accuracy, 2), '%.')
+feature_scores = pd.Series(rf.feature_importances_, index=X_train.columns).sort_values(ascending=False)
+feature_scores
+
+#Print classification report
+
+print(classification_report(y_test, y_predictions))
