@@ -177,6 +177,9 @@ glm_model_smote <- train(target~.,
                          family = "binomial",
                          trControl = ctrl_cv5)
 
+#saving the model to RDS file
+saveRDS(glm_model_smote, "./results/glm_model_smote.rds")
+
 #creating column with predicted values in the test dataset
 stars_test.normalized$glm_smote <- predict(glm_model_smote, 
                                            newdata = stars_test.normalized)
@@ -188,6 +191,8 @@ conf_matrix_glm <- caret::confusionMatrix(data = stars_test.normalized$glm_smote
 
 conf_matrix_glm
 
+saveRDS(as.matrix(conf_matrix_glm, what = "classes"), "./results/glm_conf_matrix_R.rds")
+
 
 #####Model tests#####
 
@@ -198,7 +203,7 @@ conf_matrix_glm
 vif(glm_model_smote$finalModel) #model results can be accessed via finalModel attribute
 
 ###Hosmer-Lemeshow goodness of fit test
-source("./src/functions.R")
+source("./src_R/functions/hosmer_lemeshow.R")
 
 #since the functions needs to be fed with numeric values, we need to change 
 #the type of the target variable
@@ -234,7 +239,15 @@ predicted <- predict(glm_model_smote,
 
 #to create ROC curve plot we just need to supply the function with 
 #actual values and predicted probabilities
-plotROC(stars_test.normalized$target_num, predicted$yes)
+roc_plot_glm <- plotROC(stars_test.normalized$target_num, predicted$yes)
+roc_plot_glm
+
+#We will also save it to png. First, open the connection
+png(filename="./results/roc_curve_glm_R.png")
+#plot the roc curve
+roc_plot_glm
+#closing the connection
+dev.off()
 
 #We will also calculate the area under the roc curve(auroc) using a different package,
 #namely pROC
@@ -289,6 +302,8 @@ conf_matrix_rf <- caret::confusionMatrix(stars_test.normalized$target,
 
 conf_matrix_rf
 
+saveRDS(as.matrix(conf_matrix_rf, what = "classes"), "./results/rf_conf_matrix_R.rds")
+
 
 ###Roc plot
 #we don't need to change the target variable to numeric since it was already done 
@@ -298,8 +313,16 @@ conf_matrix_rf
 predicted <- predict(rf_model_smote, 
                      newdata = stars_test.normalized, type = "prob")
 
-#plotting ROC curve for random forest
-plotROC(stars_test.normalized$target_num, predicted$yes)
+#plotting ROC curve for random forest and saving it to png
+roc_plot_rf <- plotROC(stars_test.normalized$target_num, predicted$yes)
+roc_plot_rf
+
+#opening the connection
+png(filename="./results/roc_curve_rf_R.png")
+#plotting
+roc_plot_rf
+#closing the connection
+dev.off()
 
 #Calculating the area under the ROC curve
 rf.roc<-roc(stars_test.normalized$target_num, predicted$yes)
