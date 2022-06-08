@@ -2,14 +2,9 @@
 library(tidyverse)
 library(caret)
 library(car)
-library(caTools)
 library(corrplot)
 library(InformationValue) #it masks 'confusionMatrix' function from caret that we will use later
-library(randomForest)
 library(DescTools)
-library(leaps)
-library(MLmetrics)
-library(pcaPP)
 library(pROC)
 library(MASS) #it masks 'select' from dplyr - beware of that
 library(DMwR)
@@ -327,3 +322,4 @@ dev.off()
 #Calculating the area under the ROC curve
 rf.roc<-roc(stars_test.normalized$target_num, predicted$yes)
 auc(rf.roc)
+

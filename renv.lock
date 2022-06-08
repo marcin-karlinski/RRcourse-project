@@ -1,0 +1,128 @@
+{
+  "R": {
+    "Version": "4.1.2",
+    "Repositories": [
+      {
+        "Name": "CRAN",
+        "URL": "https://cran.rstudio.com"
+      }
+    ]
+  },
+  "Packages": {
+    "KernSmooth": {
+      "Package": "KernSmooth",
+      "Version": "2.23-20",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "8dcfa99b14c296bc9f1fd64d52fd3ce7",
+      "Requirements": []
+    },
+    "MASS": {
+      "Package": "MASS",
+      "Version": "7.3-54",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "0e59129db205112e3963904db67fd0dc",
+      "Requirements": []
+    },
+    "Matrix": {
+      "Package": "Matrix",
+      "Version": "1.3-4",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "4ed05e9c9726267e4a5872e09c04587c",
+      "Requirements": [
+        "lattice"
+      ]
+    },
+    "boot": {
+      "Package": "boot",
+      "Version": "1.3-28",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "0baa960e3b49c6176a4f42addcbacc59",
+      "Requirements": []
+    },
+    "class": {
+      "Package": "class",
+      "Version": "7.3-19",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "1593b7beb067c8381c0d24e38bd778e0",
+      "Requirements": [
+        "MASS"
+      ]
+    },
+    "codetools": {
+      "Package": "codetools",
+      "Version": "0.2-18",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "019388fc48e48b3da0d3a76ff94608a8",
+      "Requirements": []
+    },
+    "lattice": {
+      "Package": "lattice",
+      "Version": "0.20-45",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "b64cdbb2b340437c4ee047a1f4c4377b",
+      "Requirements": []
+    },
+    "mgcv": {
+      "Package": "mgcv",
+      "Version": "1.8-38",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "be3c61ffbb1e3d3b3df214d192ac5444",
+      "Requirements": [
+        "Matrix",
+        "nlme"
+      ]
+    },
+    "nlme": {
+      "Package": "nlme",
+      "Version": "3.1-153",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "2d632e0d963a653a0329756ce701ecdd",
+      "Requirements": [
+        "lattice"
+      ]
+    },
+    "nnet": {
+      "Package": "nnet",
+      "Version": "7.3-16",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "3a3dc184000bc9e6c145c4dbde4dd702",
+      "Requirements": []
+    },
+    "renv": {
+      "Package": "renv",
+      "Version": "0.15.4",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "c1078316e1d4f70275fc1ea60c0bc431",
+      "Requirements": []
+    },
+    "rpart": {
+      "Package": "rpart",
+      "Version": "4.1-15",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "9787c1fcb680e655d062e7611cadf78e",
+      "Requirements": []
+    },
+    "survival": {
+      "Package": "survival",
+      "Version": "3.2-13",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "6f0a0fadc63bc6570fe172770f15bbc4",
+      "Requirements": [
+        "Matrix"
+      ]
+    }
+  }
+}
