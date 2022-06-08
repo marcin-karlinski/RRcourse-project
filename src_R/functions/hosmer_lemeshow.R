@@ -31,6 +31,26 @@
 #'hosmerlem(y=titanic_train$Survived, yhat=predicted, g=10)
 
 hosmerlem = function(y, yhat, g=20) {
+  #first, check if y and yhat are numeric
+  if(!is.numeric(y) | !is.numeric(yhat)){
+    stop(paste("y and yhat must be numeric vectors. One of them or both are not. Stopping."))
+  }
+  
+  #check if y cosnists of 0s and 1s
+  if(!(length(unique(y)) == 2 & unique(y) %in% c(0, 1))){
+    stop(paste("y must consists of numeric values of 0 and 1"))
+  }
+  
+  #check if yhat are in the range of 0 to 1
+  if(max(yhat) > 1 | min(yhat) < 0){
+    stop(paste("yhat must be fitted probabilities in a range of 0 to 1"))
+  }
+  
+  #check if y and yhat are the same length
+  if(length(y) != length(yhat)){
+    stop(paste("y and yhat must be the same length"))
+  }
+  
   #sorting the fitted values and dividing them in g number of groups
   cutyhat = cut(yhat, breaks = quantile(yhat, probs=seq(0,1, 1/g)), include.lowest=TRUE) 
   #creating a contingency table from cross-classifying factors, first for actual values
