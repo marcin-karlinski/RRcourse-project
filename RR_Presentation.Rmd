@@ -1,0 +1,77 @@
+---
+title: "Reproducible Research Project"
+author: "Aleksandra Kowalewska & Marcin Karliński & Raffaele di Costanzo"
+date: '2022-06-09'
+output: slidy_presentation
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+## Pulsar Stars Classification
+### Introduction
+
+We decided to prepare this project two fold. First of all, we significantly improved on the original code written in R. And secondly, we translated the original code to Pyhton. 
+
+
+**Agenda for today:**
+
+- Problem description      
+- Improvements in R      
+- Results       
+- Rewriting the code in Python      
+
+## Problem Description
+
+The initial work introduced the problem of classification and presented statistical methods for the classification of observations with an undefined class, based on the training set with known class affiliation of observations.       
+
+The initial code considered logistic regression and random forest as possible solutions to the problem. 
+
+Both models were constructed in R on the basis of data describing radio signals recorded during sky observation, where the positive class was the signal from the pulsar, and the negative class was radio noise.
+
+Both models also proved to be highly effective - at the level of approx. 97% of correctly classified observations. Due to the fact that in the sample there was an imbalance in the number of observations, we also took into account the sensitivity of the model, where the positive class was better indicated by the logistic regression model - it correctly classified 85%, and the random forest model - 82.6%, which suggests that for the discussed classification problem the logistic regression model provides a better classifier.
+
+However,...
+
+## Issues with the initial code
+
+...there were some issues with the initially created code.
+
+First of all, the problem solution was somewhat stripped, comparing only two methods of classification.      
+Secondly, codes description were done poorly and in need of improvements. 
+Lastly, in the initial code, a function was extracted from the web, which is no longer available for use. 
+
+Thus, some improvements were desirable.
+
+## Improvements in R 
+
+What has changed?
+
+## Results
+
+### Logistic Regression
+
+```{r glm, echo = TRUE}
+setwd("/Users/ola/Desktop/UW/Semester 4/Reproducible Research/Project")
+glm <- read.csv("glm_conf_matrix_R.csv")
+glm
+```
+
+
+## Results contd. 
+
+### Random forest
+
+```{r rf, echo = TRUE}
+setwd("/Users/ola/Desktop/UW/Semester 4/Reproducible Research/Project")
+rf <- read.csv("rf_conf_matrix_R.csv")
+rf
+```
+## Conclusions
+
+From the comparison of the initial and improved codes, the results were better after alterations (in terms of accuracy etc.). Nonetheless, the conclusions are the same in both cases.       
+Namely, logistic regression is a better fit for this problem, with higher sensitivity (0.93 vs 0.79 in RF). It better classifies the observations with the positive class, as it is more important not to miss the pulsar star than to check the signal, which turn not to be one.
+
+## Additionally: Rewriting the code in Python
+
