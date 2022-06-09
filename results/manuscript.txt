@@ -1,0 +1,7 @@
+Results of the R analysis can be found in the csv files glm_conf_matrix_R and rf_conf_matrix_R and results of the Python analysis in 
+files with the same name but '_Python' at the end instead of '_R'. 
+Accuracy was similiar for both models (0.9598 and 0.9698 respectively in R and 0.95 and 0.96 in Python), however in such a case, a particular emphasis was put on
+the accuracy of classification of positive class (since this information is much more precious for researchers studying pulsar stars).
+Hence, sensitivity (or recall, the percentage of correctly classified observations with a positive class among all the observations with a positive class),
+was higher for logistic regression model (0.931 in R algorithm and 0.92 in Python vs 0.793 for random forest in R and 0.83 in Python). 
+Based on that we concluded that the original conclusion still stands and logistic regression may be better suited for this task. 
