@@ -1,21 +1,5 @@
-# RRcourse-project
-Repository for the Reproducible research classes 2022. Improvements regarding reproducibility of bachelor thesis about classification of pulsar stars. 
+## Data description
 
+Every pulsar rotates periodically, and with every rotation produces a slightly different signal. Every observation (a candidate signal) in the data set is an average over many rotations. In the data set there are 17898 observations and 9 variables. Every candidate is described by 8 features, 4 that relate to the integrated pulse profile, and 4 that characterize the dispersion measure of the signal-to-noise ratio (DM_SNR) curve. Target class is a label given by an annotator stating whether the signal came from a pulsar star or was just a result of an interference.
 
-# Renv instructions:
-
-To reproduce the working environment simply run `renv::restore()` in the directory
-with the project. In some cases you may also need to activate the project first. 
-If you see the following after calling `renv::restore()`
-
-*This project has not yet been activated.
-Activating this project will ensure the project library is used during restore.
-Please see `?renv::activate` for more details.
-
-Would you like to activate this project before restore? [Y/n]*
-
-Just accept by typing *Y* and pressing enter. 
-
-Then if you update or install any package that will be needed in the project just run 
-`renv::snapshot()` and renv lockfile will be updated. Then just push your changes 
-to the remote repository. 
+Source: Data used in this analysis was collected from the High Time Resolution Survey [1] and was later shared on the [UCI Machine Learning Repository](https://archive.ics.uci.edu/ml/datasets/HTRU2).
