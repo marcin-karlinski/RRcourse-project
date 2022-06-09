@@ -9,12 +9,9 @@ library(pROC)
 library(MASS) #it masks 'select' from dplyr - beware of that
 library(reshape2)
 library(moments)
+library(themis)
 
-#If you have problems with DMwR package, its archived version can be installed from CRAN
-# install.packages("https://cran.r-project.org/src/contrib/Archive/DMwR/DMwR_0.4.1.tar.gz",
-# repos = NULL,
-# type = "source")
-library(DMwR)
+
 
 #changing the scipen to 999 to avoid scientific notation
 options(scipen = 999)
