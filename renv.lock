@@ -1884,6 +1884,14 @@
         "xfun"
       ]
     },
+    "titanic": {
+      "Package": "titanic",
+      "Version": "0.1.0",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "61cb96b3df52af283e889169e7b0d0f9",
+      "Requirements": []
+    },
     "tzdb": {
       "Package": "tzdb",
       "Version": "0.3.0",
