@@ -11,8 +11,6 @@ library(reshape2)
 library(moments)
 library(themis)
 
-
-
 #changing the scipen to 999 to avoid scientific notation
 options(scipen = 999)
 #changing language to english
