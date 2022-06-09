@@ -12,7 +12,8 @@ knitr::opts_chunk$set(echo = FALSE)
 ## Pulsar Stars Classification
 ### Introduction
 
-We decided to prepare this project two fold. First of all, we significantly improved on the original code written in R. And secondly, we translated the original code to Pyhton. 
+We decided to prepare this project two fold. First of all, we significantly improved on the original code written in R.      
+And secondly, we translated the original code to Pyhton. 
 
 
 **Agenda for today:**
@@ -39,7 +40,7 @@ However,...
 ...there were some issues with the initially created code.
 
 First of all, the problem solution was somewhat stripped, comparing only two methods of classification.      
-Secondly, codes description were done poorly and in need of improvements. 
+Secondly, codes description were done poorly and in need of improvements.          
 Lastly, in the initial code, a function was extracted from the web, which is no longer available for use. 
 
 Thus, some improvements were desirable.
@@ -75,7 +76,9 @@ rf
 ## Conclusions
 
 From the comparison of the initial and improved codes, the results were better after alterations (in terms of accuracy etc.). Nonetheless, the conclusions are the same in both cases.       
-Namely, logistic regression is a better fit for this problem, with higher sensitivity (0.93 vs 0.79 in RF). It better classifies the observations with the positive class, as it is more important not to miss the pulsar star than to check the signal, which turn not to be one.
+Namely, logistic regression is a better fit for this problem, with higher sensitivity (0.93 vs 0.79 in RF). It better classifies the observations with the positive class, and it is more important not to miss the pulsar star than to check the signal, which can turn not to be a pulsar star after all.
 
 ## Additionally: Rewriting the code in Python
 
+- Logistic Regression.    
+- Random Forest.   
