@@ -11,8 +11,8 @@ library(reshape2)
 library(moments)
 
 #If you have problems with DMwR package, its archived version can be installed from CRAN
-#install.packages("https://cran.r-project.org/src/contrib/Archive/DMwR/DMwR_0.4.1.tar.gz", 
-# repos = NULL, 
+# install.packages("https://cran.r-project.org/src/contrib/Archive/DMwR/DMwR_0.4.1.tar.gz",
+# repos = NULL,
 # type = "source")
 library(DMwR)
 
