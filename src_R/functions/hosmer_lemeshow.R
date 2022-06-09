@@ -9,7 +9,7 @@
 #' and 0 for negative class.
 #' @param yhat fitted probability values of the logistic regression model (between 0 and 1).
 #' @param g Arbitrary number of subgroups to use in the calculation of the test. Should be higher 
-#' than the number of degrees of freedom. 
+#' than the number of degrees of freedom. The largest accepted g is 120. 
 #' @return  Chi square test statistic and corresponding p-value of 
 #' the Hosmer-Lemeshow goodness of fit test
 #' @examples
@@ -22,7 +22,7 @@
 #'  na.omit() %>% 
 #'  dplyr::select(Survived, Pclass, Sex, Age, Parch)
 #'
-#'model <- glm(Survived ~.,family=binomial(link='logit'),data=titanic_train)
+#'model <- glm(Survived ~.,family=binomial(link='logit'), data=titanic_train)
 #'
 #'set.seed(123)
 #'predicted <- predict(model, 
@@ -36,8 +36,8 @@ hosmerlem = function(y, yhat, g=20) {
     stop(paste("y and yhat must be numeric vectors. One of them or both are not. Stopping."))
   }
   
-  #check if y cosnists of 0s and 1s
-  if(!(length(unique(y)) == 2 & unique(y) %in% c(0, 1))){
+  #check if y consists of 0s and 1s
+  if(!(length(unique(y)) == 2 & is.element(c(0), unique(y)) & is.element(c(1), unique(y)))){
     stop(paste("y must consists of numeric values of 0 and 1"))
   }
   
@@ -51,6 +51,11 @@ hosmerlem = function(y, yhat, g=20) {
     stop(paste("y and yhat must be the same length"))
   }
   
+  #check if y and yhat are the same length
+  if(g > 120){
+    stop(paste("g is too large."))
+  }
+  
   #sorting the fitted values and dividing them in g number of groups
   cutyhat = cut(yhat, breaks = quantile(yhat, probs=seq(0,1, 1/g)), include.lowest=TRUE) 
   #creating a contingency table from cross-classifying factors, first for actual values
@@ -60,7 +65,7 @@ hosmerlem = function(y, yhat, g=20) {
   #calculating chi-square test statistic
   chisq = sum((obs - expect)^2/expect) 
   #calculating p-value
-  P = pchisq(chisq, g - 2)  
+  P = round(pchisq(chisq, g - 2), 4)  
   #returning test statistic and p-value
   return(list(chisq=chisq,p.value=P))
 }
