@@ -46,15 +46,20 @@ Thus, some improvements were desirable.
 
 ## Improvements in R 
 
-What has changed?
+**What has changed?**
+
+- Code re-written in clear and understandable manner  
+- Analysis can now be reproduced
+- Proper econometrics techniques and tests
+- Dependency management with *renv* package    
+- Functions documentation and unit testing      
 
 ## Results
 
 ### Logistic Regression
 
 ```{r glm, echo = TRUE}
-setwd("/Users/ola/Desktop/UW/Semester 4/Reproducible Research/Project")
-glm <- read.csv("glm_conf_matrix_R.csv")
+glm <- read.csv("./results/glm_conf_matrix_R.csv")
 glm
 ```
 
@@ -64,8 +69,7 @@ glm
 ### Random forest
 
 ```{r rf, echo = TRUE}
-setwd("/Users/ola/Desktop/UW/Semester 4/Reproducible Research/Project")
-rf <- read.csv("rf_conf_matrix_R.csv")
+rf <- read.csv("./results/rf_conf_matrix_R.csv")
 rf
 ```
 ## Conclusions
