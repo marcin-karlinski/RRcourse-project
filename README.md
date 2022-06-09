@@ -14,7 +14,7 @@ Data used in this study was collected from the High Time Resolution Survey [1] a
 
 ## How to reproduce the research
 
-Original codes for the pulsar star signal prediction can be found in the folder *src_R*, under the names *logistic_regression_original_script.R* and *RandomForest_original_script.R*. The re-written analysis can be found in the file *revised_codes.R* in the same folder. Original data, that was also used for this project, is located in the *data* folder. Codes for analysis in Python can be found in the *src_Python* file. Results of the revised study are in the *results* folder. Files regarding the renv's environment are located in the *renv* folder. Below you can find instructions for reproducing the environment regarding packages used in this project (for consistency of packages versions). 
+Original codes for the pulsar star signal prediction can be found in the folder *src_R*, under the names *logistic_regression_original_script.R* and *RandomForest_original_script.R*. The re-written analysis can be found in the file *revised_codes.R* in the same folder. All the functions needed to run the script (with documentation) are in the *functions* folder. Original data, that was also used for this project, is located in the *data* folder. Codes for analysis in Python can be found in the *src_Python* file. Results of the revised study are in the *results* folder. Files regarding the renv's environment are located in the *renv* folder. Below you can find instructions for reproducing the environment regarding packages used in this project (for consistency of packages versions). 
 
 
 ## Renv instructions:
