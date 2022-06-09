@@ -58,7 +58,7 @@ y_pred = log_reg.predict(X_test)
 
 # Print the accuracy score in percentage terms.
 
-print('Model accuracy score with 10 decision-trees : {0:0.4f}'. format(accuracy_score(y_test, y_pred)))
+print('Model accuracy score : {0:0.4f}'. format(accuracy_score(y_test, y_pred)))
 
 # Get importance
 importance = log_reg.coef_[0]
@@ -70,4 +70,10 @@ for i,v in enumerate(importance):
 #Print classification report
 
 print(classification_report(y_test, y_pred))
+
+#exporting results to a csv file
+report = classification_report(y_test, y_pred, output_dict=True)
+df = pd.DataFrame(report).transpose()
+print(df)
+df.to_csv('glm_conf_matrix_python.csv')
 
