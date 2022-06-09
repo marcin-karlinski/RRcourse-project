@@ -532,8 +532,8 @@ Aleksandra Kowalewska &amp; Marcin Karliński &amp; Raffaele di Costanzo
 <h1>Pulsar Stars Classification</h1>
 <h3 id="introduction">Introduction</h3>
 <p>We decided to prepare this project two fold. First of all, we
-significantly improved on the original code written in R. And secondly,
-we translated the original code to Pyhton.</p>
+significantly improved on the original code written in R.<br />
+And secondly, we translated the original code to Pyhton.</p>
 <p><strong>Agenda for today:</strong></p>
 <ul>
 <li>Problem description<br />
@@ -573,8 +573,9 @@ regression model provides a better classifier.</p>
 <p>First of all, the problem solution was somewhat stripped, comparing
 only two methods of classification.<br />
 Secondly, codes description were done poorly and in need of
-improvements. Lastly, in the initial code, a function was extracted from
-the web, which is no longer available for use.</p>
+improvements.<br />
+Lastly, in the initial code, a function was extracted from the web,
+which is no longer available for use.</p>
 <p>Thus, some improvements were desirable.</p>
 </div>
 <div id="improvements-in-r" class="slide section level2">
@@ -633,12 +634,17 @@ were better after alterations (in terms of accuracy etc.). Nonetheless,
 the conclusions are the same in both cases.<br />
 Namely, logistic regression is a better fit for this problem, with
 higher sensitivity (0.93 vs 0.79 in RF). It better classifies the
-observations with the positive class, as it is more important not to
-miss the pulsar star than to check the signal, which turn not to be
-one.</p>
+observations with the positive class, and it is more important not to
+miss the pulsar star than to check the signal, which can turn not to be
+a pulsar star after all.</p>
 </div>
 <div id="additionally-rewriting-the-code-in-python" class="slide section level2">
 <h1>Additionally: Rewriting the code in Python</h1>
+<ul>
+<li>Logistic Regression.<br />
+</li>
+<li>Random Forest.</li>
+</ul>
 </div>
 
   <!-- dynamically load mathjax for compatibility with self-contained -->
