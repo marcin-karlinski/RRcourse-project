@@ -1,6 +1,7 @@
 #libraries used in the project
 library(tidyverse)
 library(caret)
+library(randomForest)
 library(car)
 library(corrplot)
 library(InformationValue) #it masks 'confusionMatrix' function from caret that we will use later
